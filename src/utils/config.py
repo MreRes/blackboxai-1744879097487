@@ -11,12 +11,12 @@ class Config:
     DEBUG = os.getenv('DEBUG', True)
     
     # Database Configuration
-    DATABASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'financial.db')
+    DATABASE_PATH = os.path.join(os.getcwd(), 'instance', 'financial.db')
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{DATABASE_PATH}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # WhatsApp Bot Configuration
-    WHATSAPP_ENABLED = os.getenv('WHATSAPP_ENABLED', 'true').lower() == 'true'
+    WHATSAPP_ENABLED = os.getenv('WHATSAPP_ENABLED', 'false').lower() == 'true'  # Disabled by default
     
     # Financial Settings
     DEFAULT_CURRENCY = 'Rp'  # Indonesian Rupiah
