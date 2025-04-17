@@ -3,11 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(24)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///financial.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+from src.utils.config import Config
 
+app = Flask(__name__)
+Config.init_app(app)
 db = SQLAlchemy(app)
 
 # Database Models
