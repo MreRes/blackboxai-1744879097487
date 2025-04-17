@@ -1,4 +1,5 @@
 import threading
+import time
 from src.dashboard.app import app, db
 from src.bot.whatsapp_handler import WhatsAppBot
 from src.utils.config import Config
@@ -88,16 +89,37 @@ def init_database():
 def main():
     """Main entry point of the application"""
     try:
-        # Initialize database first
-        init_database()
+        logger.info("Starting Financial Dashboard Application")
         
-        # Start WhatsApp bot in a separate thread if enabled
-        if Config.WHATSAPP_ENABLED:
-            logger.info("Starting WhatsApp bot...")
-            whatsapp_thread = threading.Thread(target=start_whatsapp_bot)
-            whatsapp_thread.daemon = True
-            whatsapp_thread.start()
-            logger.info("WhatsApp bot started successfully")
+        # Configure logging
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
+        
+        # Initialize Flask app configuration
+        logger.info("Initializing Flask configuration...")
+        Config.init_app(app)
+        
+        # Initialize database
+        logger.info("Initializing database...")
+        try:
+            init_database()
+            logger.info("Database initialization successful")
+        except Exception as db_error:
+            logger.error(f"Database initialization failed: {str(db_error)}")
+            raise
+        
+        # Start WhatsApp bot only if explicitly enabled and not in debug mode
+        if Config.WHATSAPP_ENABLED and not Config.DEBUG:
+            try:
+                logger.info("Starting WhatsApp bot...")
+                whatsapp_thread = threading.Thread(target=start_whatsapp_bot)
+                whatsapp_thread.daemon = True
+                whatsapp_thread.start()
+            except Exception as e:
+                logger.warning(f"WhatsApp bot initialization skipped: {str(e)}")
+                logger.info("Continuing without WhatsApp functionality")
 
         # Start Flask dashboard
         logger.info("Starting Flask dashboard...")
