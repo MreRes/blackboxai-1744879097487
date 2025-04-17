@@ -43,8 +43,19 @@ class WhatsAppBot:
         """Initialize the WhatsApp Web driver"""
         # Clean up existing processes and create temp directory
         try:
-            # Kill any existing processes
-            subprocess.run(['pkill', '-f', '(chrome|chromedriver|Xvfb)'], shell=True, stderr=subprocess.DEVNULL)
+            # Clean up any existing processes more thoroughly
+            cleanup_commands = [
+                'pkill -f chrome',
+                'pkill -f chromedriver',
+                'pkill -f Xvfb',
+                'rm -rf /tmp/.X*-lock',
+                'rm -rf /tmp/.X11-unix/X*'
+            ]
+            for cmd in cleanup_commands:
+                try:
+                    subprocess.run(cmd.split(), stderr=subprocess.DEVNULL)
+                except:
+                    pass
             time.sleep(2)
 
             # Create unique temporary directory
