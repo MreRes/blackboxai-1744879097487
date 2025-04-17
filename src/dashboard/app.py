@@ -21,6 +21,7 @@ class Transaction(db.Model):
     amount = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(50), nullable=False)
     transaction_type = db.Column(db.String(20), nullable=False)  # 'income' or 'expense'
+    description = db.Column(db.String(200))  # Optional description field
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
