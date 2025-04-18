@@ -21,7 +21,7 @@ A comprehensive financial management system combining a web dashboard and WhatsA
 ## Prerequisites
 
 - Python 3.8 or higher
-- Chrome browser (for WhatsApp Web automation)
+- Google Chrome browser
 - SQLite3
 
 ## Installation
@@ -48,7 +48,19 @@ source venv/bin/activate
 pip install -r requirements_fixed.txt
 ```
 
-4. Set up system dependencies (for WhatsApp bot):
+4. Set up Chrome and ChromeDriver:
+
+### For Windows:
+1. Install Google Chrome if not already installed
+   - Download from: https://www.google.com/chrome/
+
+2. Download ChromeDriver for Windows:
+   - Visit: https://chromedriver.chromium.org/downloads
+   - Download the version matching your Chrome browser
+   - Extract the zip file
+   - Place chromedriver.exe in the project root directory
+
+### For Linux:
 ```bash
 # For Debian/Ubuntu
 sudo apt-get update
@@ -57,10 +69,7 @@ sudo apt-get install -y xvfb google-chrome-stable
 # For RHEL/CentOS
 sudo yum update
 sudo yum install -y xorg-x11-server-Xvfb google-chrome-stable
-```
 
-5. Set up ChromeDriver (for WhatsApp bot):
-```bash
 # Extract included ChromeDriver
 unzip chromedriver-linux64.zip
 chmod +x chromedriver-linux64/chromedriver
@@ -72,14 +81,14 @@ chmod +x chromedriver-linux64/chromedriver
 
 1. Start the Flask server:
 ```bash
-# On Linux/Mac
-PYTHONPATH=. FLASK_APP=new_app.py FLASK_DEBUG=1 python new_app.py
-
 # On Windows PowerShell
 $env:PYTHONPATH="."; $env:FLASK_APP="new_app.py"; $env:FLASK_DEBUG=1; python new_app.py
 
 # On Windows CMD
 set PYTHONPATH=. && set FLASK_APP=new_app.py && set FLASK_DEBUG=1 && python new_app.py
+
+# On Linux/Mac
+PYTHONPATH=. FLASK_APP=new_app.py FLASK_DEBUG=1 python new_app.py
 ```
 
 2. Access the dashboard at:
@@ -143,6 +152,29 @@ ihsg
 kurs
 ```
 
+## Troubleshooting
+
+### Common Issues on Windows
+
+1. ChromeDriver Issues:
+   - Error: "ChromeDriver not found"
+     - Make sure chromedriver.exe is in the project root directory
+     - Verify ChromeDriver version matches your Chrome browser version
+   
+   - Error: "Chrome not reachable"
+     - Close all Chrome instances from Task Manager
+     - Restart the bot application
+
+2. WhatsApp Web Connection:
+   - Error: "Failed to load WhatsApp Web"
+     - Check internet connection
+     - Clear Chrome browser cache
+     - Try increasing timeout in config.py: `WHATSAPP_TIMEOUT=120`
+
+3. QR Code Issues:
+   - Make sure temp directory has write permissions
+   - Try scanning QR code with latest WhatsApp version
+
 ## Project Structure
 ```
 financial-system/
@@ -183,7 +215,7 @@ Core dependencies are locked to these versions for stability:
 
 - The web dashboard runs on port 8000
 - Sample data is automatically loaded for demonstration
-- WhatsApp bot requires Chrome/Chromium browser
+- WhatsApp bot requires Chrome browser
 - Tailwind CSS is included via CDN for simplicity
 
 ## License
