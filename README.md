@@ -56,9 +56,20 @@ pip install -r requirements_fixed.txt
 
 2. Download ChromeDriver for Windows:
    - Visit: https://chromedriver.chromium.org/downloads
-   - Download the version matching your Chrome browser
+   - Download the version matching your Chrome browser version
    - Extract the zip file
-   - Place chromedriver.exe in the project root directory
+   - Create a folder named 'chromedriver-win64' in the project root directory
+   - Place chromedriver.exe inside the 'chromedriver-win64' folder
+   
+   Example directory structure:
+   ```
+   your-project/
+   ├── chromedriver-win64/
+   │   └── chromedriver.exe    # Place here
+   ├── src/
+   ├── main.py
+   └── requirements.txt
+   ```
 
 ### For Linux:
 ```bash
@@ -158,7 +169,8 @@ kurs
 
 1. ChromeDriver Issues:
    - Error: "ChromeDriver not found"
-     - Make sure chromedriver.exe is in the project root directory
+     - Make sure chromedriver.exe is in the chromedriver-win64 folder
+     - Verify the folder path: your-project/chromedriver-win64/chromedriver.exe
      - Verify ChromeDriver version matches your Chrome browser version
    
    - Error: "Chrome not reachable"
